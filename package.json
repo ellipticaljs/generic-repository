@@ -1,15 +1,15 @@
 {
   "name": "elliptical-generic-repository",
   "description": "Javascript Generic Repository",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "S. Francis",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tachyon1337/elliptical-generic-repository.git"
+    "url": "https://github.com/ellipticaljs/generic-repository.git"
   },
   "dependencies":{
-    "elliptical-lodash":"git+https://github.com/tachyon1337/elliptical-lodash.git"
+    "elliptical-lodash":"git+https://github.com/ellipticaljs/lodash.git"
   },
   "devDependencies": {
     "gulp": "^3.8.7",

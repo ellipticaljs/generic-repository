@@ -1,7 +1,7 @@
 {
   "name": "elliptical-generic-repository",
   "description": "Javascript Generic Repository",
-  "version":"1.0.1",
+  "version":"1.0.2",
   "main": "dist/elliptical.generic.repository.js",
   "authors": [
     "S. Francis"
@@ -12,13 +12,33 @@
     "repository"
   ],
   "moduleType": [],
-  "homepage": "https://github.com/tachyon1337/elliptical-generic-repository",
+  "homepage": "https://github.com/ellipticaljs/generic-repository",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
   ],
   "dependencies": {
     "elliptical-lodash": "~1.0.2"
