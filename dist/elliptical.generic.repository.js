@@ -40,20 +40,20 @@
     function _getDataPage(data,params){
         return _.filter(data,function(obj,index){
             return (index>=params.start && index <=params.end);
-        })
+        });
     }
 
 
     function _get(model,id){
         return _.find(model,function(obj){
             return obj.id.toString()===id.toString();
-        })
+        });
     }
 
     function _getIndex(model,id){
         return _.findIndex(model,function(obj){
             return obj.id.toString()===id.toString();
-        })
+        });
     }
 
     /**
@@ -94,9 +94,7 @@
         var old=_get(model,id);
         for(var key in old){
             if(old.hasOwnProperty(key)){
-                if(newObj[key] !==undefined){
-                    old[key]=newObj[key];
-                }
+                if(newObj[key] !==undefined) old[key]=newObj[key];
             }
         }
     }
@@ -104,13 +102,8 @@
 
     function GenericRepository(model,fn){
         var length=arguments.length;
-        if(length===0){
-            throw 'Generic Repository requires an array model passed in the constructor';
-        }
-
-        if(typeof fn !=='function'){
-            fn=null;
-        }
+        if(length===0) throw 'Generic Repository requires an array model passed in the constructor';
+        if(typeof fn !=='function') fn=null;
         this.model=model;
         this.callback=fn;
 
@@ -124,81 +117,47 @@
             }
             var model=this.model;
             var result;
-            if(params && params.id){
-                result= _get(model,params.id);
+            if(params && params.id) result= _get(model,params.id);
+            else if(query && query.filter && query.filter !==undefined) result=this.query(query.filter);
+            else result= model;
 
-            }else if(query && query.filter && query.filter !==undefined){
-                result=this.query(query.filter);
-            }else{
-                result= model;
-            }
+            if(query && query.orderBy && query.orderBy !==undefined) result=this.orderBy(result,query.orderBy);
 
-            if(query && query.orderBy && query.orderBy !==undefined){
-                result=this.orderBy(result,query.orderBy);
-            }
+            if(query && query.orderByDesc && query.orderByDesc !==undefined) result=this.orderByDesc(result,query.orderByDesc);
 
-            if(query && query.orderByDesc && query.orderByDesc !==undefined){
-                result=this.orderByDesc(result,query.orderByDesc);
-            }
+            if(query && query.paginate) result=this.paginate(result,query.paginate);
 
-
-            if(query && query.paginate){
-                result=this.paginate(result,query.paginate);
-            }
-
-            if(this.callback){
-                this.callback(result,'get',params,callback);
-            }else{
-                return (callback) ? callback(null,result) : result;
-            }
+            if(this.callback) this.callback(result,'get',params,callback);
+            else return (callback) ? callback(null,result) : result;
         };
 
         this.post=function(params,resource,callback){
             var origParams=params;
-            if(typeof resource !=='string'){
-                callback=resource;
-            }
+            if(typeof resource !=='string') callback=resource;
             var model=this.model;
             params.id=utils.guid();
             model.push(params);
 
-            if(this.callback){
-                this.callback(params,'post',origParams,callback);
-            }else{
-                return (callback) ? callback(null,params) : params;
-            }
+            if(this.callback) this.callback(params,'post',origParams,callback);
+            else return (callback) ? callback(null,params) : params;
         };
 
         this.put=function(params,resource,callback){
-            if(typeof resource !=='string'){
-                callback=resource;
-            }
+            if(typeof resource !=='string') callback=resource;
             var model=this.model;
             _replace(model,params.id,params);
 
-            if(this.callback){
-                this.callback(params,'put',params,callback);
-            }else{
-                return (callback) ? callback(null,params) : params;
-            }
+            if(this.callback) this.callback(params,'put',params,callback);
+            else return (callback) ? callback(null,params) : params;
         };
 
         this.delete=function(params,resource,callback){
-            if(typeof resource !=='string'){
-                callback=resource;
-            }
-            if(params.id){
-                _delete(model,params.id);
-            }else if(params.ids){
-                _deleteRange(model,params.ids);
-            }
+            if(typeof resource !=='string') callback=resource;
+            if(params.id) _delete(model,params.id);
+            else if(params.ids) _deleteRange(model,params.ids);
 
-            if(this.callback){
-                this.callback(null,'delete',params,callback);
-            }else{
-                return (callback) ? callback(null,null) : null;
-            }
-
+            if(this.callback) this.callback(null,'delete',params,callback);
+            else return (callback) ? callback(null,null) : null;
         };
 
         this.Enumerable=function(){
