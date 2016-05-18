@@ -229,6 +229,22 @@
             return {data:data,count:count};
         };
 
+        this._get=function(params,query,callback){
+            var model=this.model;
+            var result;
+            if(query && query.filter && query.filter !==undefined) result=this.query(query.filter);
+            else result= model;
+
+            if(query && query.orderBy && query.orderBy !==undefined) result=this.orderBy(result,query.orderBy);
+
+            if(query && query.orderByDesc && query.orderByDesc !==undefined) result=this.orderByDesc(result,query.orderByDesc);
+
+            if(query && query.paginate) result=this.paginate(result,query.paginate);
+
+            if(this.callback) this.callback(result,'get',params,callback);
+            else return (callback) ? callback(null,result) : result;
+        };
+
 
     }
 
