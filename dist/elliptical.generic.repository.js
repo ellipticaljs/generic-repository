@@ -172,7 +172,7 @@
             var origParams=params;
             if(typeof resource !=='string') callback=resource;
             var model=this.model;
-            params.id=_guid();
+            if(!params.id) params.id=_guid();
             params=this._post(params);
             model.push(params);
             this.onChange(model);
