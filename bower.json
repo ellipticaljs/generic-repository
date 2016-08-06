@@ -1,7 +1,7 @@
 {
   "name": "elliptical-generic-repository",
   "description": "Javascript Generic Repository",
-  "version":"1.0.10",
+  "version":"1.0.11",
   "main": "dist/elliptical.generic.repository.js",
   "authors": [
     "S. Francis"
