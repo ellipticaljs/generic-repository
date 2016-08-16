@@ -199,8 +199,9 @@
             else return (callback) ? callback(null,null) : null;
         };
 
-        this.Enumerable=function(){
-            return Enumerable.From(this.model);
+        this.Enumerable=function(model){
+            if(model===undefined) model=this.model;
+            return Enumerable.From(model);
         };
 
         this.query=function(filter,toEnumerable){
